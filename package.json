@@ -1,0 +1,20 @@
+{
+  "name": "growth-hackers",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/victorbraga8/growth-hackers.git",
+  "author": "Victor Braga <victorbraga.8@hotmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules src/server.ts",
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.7.2"
+  },
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}

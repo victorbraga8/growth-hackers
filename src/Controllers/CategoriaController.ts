@@ -1,4 +1,5 @@
 const CategoriaModel = require('../Models/Categoria');
+const ProdutoCategoriaModel = require('../Models/Produto');
 
 class CategoriaController{
   async criaCategoria(req:any, res:any){
@@ -20,7 +21,7 @@ class CategoriaController{
 
   async listaCategorias(req:any, res:any){
     try {
-      const categoria = await CategoriaModel.find();
+      const categoria = await CategoriaModel.find().populate('produtos');
       return res.json(categoria);
     } catch (error:any) {
       return res.status(400).send({'error':error.message})
@@ -39,6 +40,7 @@ class CategoriaController{
   async atualizaCategoria(req:any, res:any){
     const categoriaId = req.params.id;
     const atualizacao = req.body;
+
     const categoria = await CategoriaModel.findByIdAndUpdate(categoriaId, atualizacao, {new:true});
     return res.send(categoria);
 

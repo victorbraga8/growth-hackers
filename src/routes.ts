@@ -1,6 +1,7 @@
 import { Router,Request, Response } from "express";
 
 const CategoriaController = require('./Controllers/CategoriaController');
+const ProdutoController = require('./Controllers/ProdutoController');
 const router = Router();
 
 router.get('/base', (req: Request, res: Response) => {
@@ -12,5 +13,8 @@ router.post('/criacategoria', CategoriaController.criaCategoria);
 router.post('/buscacategoria/:id', CategoriaController.consultaCategoria);
 router.put('/atualizacategoria/:id', CategoriaController.atualizaCategoria);
 router.delete('/removecategoria/:id', CategoriaController.removeCategoria);
+
+router.post('/criaproduto', ProdutoController.criaProduto);
+router.post('/atribuiprodutocat', ProdutoController.atribuiProdutoCategoria);
 
 export {router};

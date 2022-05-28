@@ -1,20 +1,21 @@
-const mongooseDb = require('../DataBase/');
+const mongooseCategoria = require('../DataBase/');
 
-const Categoria = new mongooseDb.Schema({
+const Categoria = new mongooseCategoria.Schema({
   titulo:{
       type:String,
       required: true,
       unique: true
   },
   produtos:[
-      {
-          type:mongooseDb.Schema.Types.ObjectId, ref:"Produto"
-      }
-  ],
+    {
+        type:mongooseCategoria.Schema.Types.ObjectId, 
+        ref:"Produto"
+    }
+],
   timestamps:{
       type: Date,
       default: Date.now()
   }
 });
 
-module.exports = mongooseDb.model("CategoriaModel",Categoria);
+module.exports = mongooseCategoria.model("Categoria",Categoria);

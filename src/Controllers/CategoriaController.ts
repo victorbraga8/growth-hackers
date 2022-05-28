@@ -14,8 +14,34 @@ class CategoriaController{
       const categoria = await CategoriaModel.findById(req.params.id);
       return res.json(categoria);
     } catch (error:any) {
-      return res.json(error.message);
+      return res.status(400).send({'error':error.message})
     }
+  }
+
+  async listaCategorias(req:any, res:any){
+    try {
+      const categoria = await CategoriaModel.find();
+      return res.json(categoria);
+    } catch (error:any) {
+      return res.status(400).send({'error':error.message})
+    }
+  }
+
+  async removeCategoria(req:any, res:any){
+    try {
+      const categoria = await CategoriaModel.findByIdAndRemove(req.params.id);
+      return res.send({"Mensagem":`Categoria ${req.params.id} removida.`});
+    } catch (error:any) {
+      return res.status(400).send({'error':error.message})
+    }
+  }
+
+  async atualizaCategoria(req:any, res:any){
+    const categoriaId = req.params.id;
+    const atualizacao = req.body;
+    const categoria = await CategoriaModel.findByIdAndUpdate(categoriaId, atualizacao, {new:true});
+    return res.send(categoria);
+
   }
 }
 

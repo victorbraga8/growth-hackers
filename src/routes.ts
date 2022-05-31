@@ -4,10 +4,6 @@ const CategoriaController = require('./Controllers/CategoriaController');
 const ProdutoController = require('./Controllers/ProdutoController');
 const router = Router();
 
-router.get('/base', (req: Request, res: Response) => {
-  res.json({ message: 'Servidor Ok' })
-});
-
 router.get('/listacategorias', CategoriaController.listaCategorias);
 router.post('/criacategoria', CategoriaController.criaCategoria);
 router.post('/buscacategoria/:id', CategoriaController.consultaCategoria);
@@ -20,5 +16,6 @@ router.post('/atribuiprodutocat', ProdutoController.atribuiProdutoCategoria);
 router.post('/removeatualizaprodutocat', ProdutoController.removeAtualizaProdutoCategoria);
 router.put('/atualizaproduto/:id', ProdutoController.atualizaProduto);
 router.delete('/removeproduto/:id', ProdutoController.removeProduto);
+router.post('/exportaprodutos', ProdutoController.exportaProdutos);
 
 export {router};

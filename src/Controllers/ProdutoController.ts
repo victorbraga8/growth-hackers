@@ -52,7 +52,6 @@ class ProdutoController{
 
       const produtos = produtoReq.concat(produtoArr);
       const produtosUnicos = HelpersFunc.limpaDuplicados(produtos, JSON.stringify);
-      console.log(produtosUnicos);
 
       const categoria = await CategoriaProdutoModel.findByIdAndUpdate(categoriaId, { produtos:produtosUnicos}, {new: true}).populate('produtos');
       return res.send(categoria);
@@ -83,6 +82,19 @@ class ProdutoController{
   async listaProdutos(req:any, res:any){
     const produto = await ProdutoModel.find().populate('categoria');
     return res.send(produto);
+  }
+
+  async exportaProdutos(req:any, res:any){
+    
+    const fs = require('fs');
+    const produtos = await ProdutoModel.find();
+    fs.writeFile("listagem-produto.json", JSON.stringify(produtos), (err:any) => {
+      if(err){
+        res.status(500).send({"Mensagem":"Erro na Exportação"});
+      }else{
+        res.send({"Mensagem:":"Exportação Concluída"})
+      }
+    });
   }
 
 }

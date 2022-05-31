@@ -1,5 +1,6 @@
 const ProdutoModel = require('../Models/Produto');
 const CategoriaProdutoModel = require('../Models/Categoria');
+const HelpersFunc = require('../Helpers/Helpers');
 
 class ProdutoController{
   async criaProduto(req:any, res:any){
@@ -34,7 +35,7 @@ class ProdutoController{
   async atribuiProdutoCategoria(req:any, res:any){
     try {
       const {produtoId, categoriaId} = req.body;
-      const produtoReq = [];
+      const produtoReq:any[] = [];
       const produtoArr = [];
 
       for(let i=0; i<= produtoId.length-1; i++){
@@ -48,8 +49,12 @@ class ProdutoController{
         const produtoCategoria = await ProdutoModel.findById(categoriaArr['produtos'][j]);
         produtoArr.push(produtoCategoria);
       }
+
       const produtos = produtoReq.concat(produtoArr);
-      const categoria = await CategoriaProdutoModel.findByIdAndUpdate(categoriaId, { produtos:produtos}, {new: true}).populate('produtos');
+      const produtosUnicos = HelpersFunc.limpaDuplicados(produtos, JSON.stringify);
+      console.log(produtosUnicos);
+
+      const categoria = await CategoriaProdutoModel.findByIdAndUpdate(categoriaId, { produtos:produtosUnicos}, {new: true}).populate('produtos');
       return res.send(categoria);
 
     } catch (error:any) {
@@ -73,6 +78,11 @@ class ProdutoController{
 
     res.send(categoriaAtualizada);
 
+  }
+
+  async listaProdutos(req:any, res:any){
+    const produto = await ProdutoModel.find().populate('categoria');
+    return res.send(produto);
   }
 
 }

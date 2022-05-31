@@ -14,6 +14,7 @@ router.post('/buscacategoria/:id', CategoriaController.consultaCategoria);
 router.put('/atualizacategoria/:id', CategoriaController.atualizaCategoria);
 router.delete('/removecategoria/:id', CategoriaController.removeCategoria);
 
+router.get('/listaprodutos', ProdutoController.listaProdutos);
 router.post('/criaproduto', ProdutoController.criaProduto);
 router.post('/atribuiprodutocat', ProdutoController.atribuiProdutoCategoria);
 router.post('/removeatualizaprodutocat', ProdutoController.removeAtualizaProdutoCategoria);

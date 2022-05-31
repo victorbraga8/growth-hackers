@@ -12,7 +12,7 @@ class CategoriaController{
   }
   async consultaCategoria(req:any, res:any){
     try {
-      const categoria = await CategoriaModel.findById(req.params.id);
+      const categoria = await CategoriaModel.findById(req.params.id).populate('produtos');
       return res.send(categoria);
     } catch (error:any) {
       return res.status(400).send({'error':error.message});
@@ -30,8 +30,13 @@ class CategoriaController{
 
   async removeCategoria(req:any, res:any){
     try {
-      const categoria = await CategoriaModel.findByIdAndRemove(req.params.id);
-      return res.send({"Mensagem":`Categoria ${req.params.id} removida.`});
+      const categoria = await CategoriaModel.findById(req.params.id);
+      if(categoria['produtos'].length >= 1){
+        res.status(400).send({"Mensagem":`Categoria ${categoria['titulo']} não pode ser removida, pois possui produtos`})
+      }else{
+        const categoria = await CategoriaModel.findByIdAndRemove(req.params.id);
+        return res.send({"Mensagem":`Categoria ${req.params.id} removida.`});
+      }  
     } catch (error:any) {
       return res.status(400).send({'error':error.message});
     }

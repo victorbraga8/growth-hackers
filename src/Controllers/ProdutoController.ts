@@ -41,7 +41,7 @@ class ProdutoController{
         const produto = await ProdutoModel.findById(produtoId[i]);
         produtoReq.push(produto);
       }
-      // const produto = await ProdutoModel.findById(produtoId);
+
       const categoriaArr = await CategoriaProdutoModel.findById(categoriaId);
 
       for(let j=0; j<= categoriaArr['produtos'].length-1; j++){
@@ -51,11 +51,30 @@ class ProdutoController{
       const produtos = produtoReq.concat(produtoArr);
       const categoria = await CategoriaProdutoModel.findByIdAndUpdate(categoriaId, { produtos:produtos}, {new: true}).populate('produtos');
       return res.send(categoria);
-      
+
     } catch (error:any) {
       return res.status(400).send({'error':error.message});
     }
   }
+
+  async removeAtualizaProdutoCategoria(req:any, res:any){
+    const {produtoId, categoriaId} = req.body;
+    const produtoCat:any[] = [];
+
+    const categoria = await CategoriaProdutoModel.findById(categoriaId);
+
+    for(let i=0; i<=categoria['produtos'].length-1; i++){
+      const produto = await ProdutoModel.findById(categoria['produtos'][i]);
+      produtoCat.push(produto['_id'].valueOf());
+    }
+
+    const produtosAtualizados = produtoCat.filter((p:any) => !produtoId.includes(p));
+    const categoriaAtualizada = await CategoriaProdutoModel.findByIdAndUpdate(categoriaId, { produtos:produtosAtualizados}, {new: true}).populate('produtos') 
+
+    res.send(categoriaAtualizada);
+
+  }
+
 }
 
 module.exports = new ProdutoController();

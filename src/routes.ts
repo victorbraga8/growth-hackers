@@ -16,6 +16,7 @@ router.delete('/removecategoria/:id', CategoriaController.removeCategoria);
 
 router.post('/criaproduto', ProdutoController.criaProduto);
 router.post('/atribuiprodutocat', ProdutoController.atribuiProdutoCategoria);
+router.post('/removeatualizaprodutocat', ProdutoController.removeAtualizaProdutoCategoria);
 router.put('/atualizaproduto/:id', ProdutoController.atualizaProduto);
 router.delete('/removeproduto/:id', ProdutoController.removeProduto);
 

@@ -1,4 +1,4 @@
-const mongooseCategoria = require('../DataBase/');
+const mongooseCategoria = require('../DataBase/index');
 
 const Categoria = new mongooseCategoria.Schema({
   titulo:{

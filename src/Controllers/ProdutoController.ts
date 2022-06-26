@@ -16,6 +16,8 @@ class ProdutoController{
     const produto = await ProdutoModel.find();
     return res.send(produto);
   }
+
+  
 }
 
 module.exports = new ProdutoController();
